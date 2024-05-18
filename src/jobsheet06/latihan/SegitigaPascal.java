@@ -1,4 +1,4 @@
-package jobsheet06.latahan;
+package jobsheet06.latihan;
 
 import java.util.Scanner;
 
