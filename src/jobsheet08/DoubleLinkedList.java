@@ -2,36 +2,40 @@ package jobsheet08;
 
 public class DoubleLinkedList<T> {
     private DNode<T> front = null, back = null;
+
     @Override
     public String toString() {
+        if (front == null) {
+            return "Double Linked List Kosong";
+        }
+
         DNode<T> curr = front;
-        if (curr == null) {
-            return "Double Linked List Kosong";
-        } else {
-            String str = "[" + curr.nodeValue;
-            while (curr.next != curr) {                
-                curr = curr.next;
-                str += ", " + curr.nodeValue;
-            }
-            str += "]";
-            return str;
+        StringBuilder str = new StringBuilder("[" + curr.nodeValue);
+
+        while (curr.next != null) {
+            curr = curr.next;
+            str.append(", ").append(curr.nodeValue);
         }
+        str.append("]");
+        return str.toString();
     }
-    // latihan no 1
+
     public String toStringBack() {
-        DNode<T> curr = back;
-        if (curr == null) {
+        if (back == null) {
             return "Double Linked List Kosong";
-        } else {
-            String str = "[" + curr.nodeValue;
-            while (curr.prev != curr) {
-                curr = curr.prev;
-                str += ", " + curr.nodeValue;
-            }
-            str += "]";
-            return str;
         }
+
+        DNode<T> curr = back;
+        StringBuilder str = new StringBuilder("[" + curr.nodeValue);
+
+        while (curr.prev != null) {
+            curr = curr.prev;
+            str.append(", ").append(curr.nodeValue);
+        }
+        str.append("]");
+        return str.toString();
     }
+
     public void tambahNode_Depan(DNode<T> newNode) {
         if (front == null) {
             front = newNode;
@@ -42,6 +46,7 @@ public class DoubleLinkedList<T> {
             front = newNode;
         }
     }
+
     public void tambahNode_Akhir(DNode<T> newNode) {
         if (back == null) {
             tambahNode_Depan(newNode);
@@ -51,34 +56,80 @@ public class DoubleLinkedList<T> {
             back = newNode;
         }
     }
-    // latihan no 2
-    public void tambahNode_Sebelum(DNode<T> newNode, DNode<T> target) {
-        if (target == front) {
-            tambahNode_Depan(newNode);
-        } else {
-            newNode.next = target;
-            newNode.prev = target.prev;
-            target.prev.next = newNode;
-            target.prev = newNode;
+
+    public void tambahNode_Sebelum(DNode<T> newNode, T targetValue) {
+        DNode<T> current = front;
+
+        while (current != null && !current.nodeValue.equals(targetValue)) {
+            current = current.next;
+        }
+
+        if (current != null) {
+            newNode.next = current;
+            newNode.prev = current.prev;
+            if (current.prev != null) {
+                current.prev.next = newNode;
+            } else {
+                front = newNode;
+            }
+            current.prev = newNode;
         }
     }
-    // latihan no 3
-    public void tambahNode_SebelumBacaMundur(DNode<T> newNode, DNode<T> target) {
-        tambahNode_Sebelum(newNode, target);
-    }
-    // latihan no 4
-    public void tambahNode_Setelah(DNode<T> newNode, DNode<T> target) {
-        if (target == back) {
-            tambahNode_Akhir(newNode);
-        } else {
-            newNode.prev = target;
-            newNode.next = target.next;
-            target.next.prev = newNode;
-            target.next = newNode;
+
+    public void tambahNode_SebelumBacaMundur(DNode<T> newNode, T targetValue) {
+        DNode<T> current = back;
+
+        while (current != null && !current.nodeValue.equals(targetValue)) {
+            current = current.prev;
+        }
+
+        if (current != null) {
+            newNode.next = current;
+            newNode.prev = current.prev;
+            if (current.prev != null) {
+                current.prev.next = newNode;
+            } else {
+                front = newNode;
+            }
+            current.prev = newNode;
         }
     }
-    // latihan no 5
-    public void tambahNode_SetelahBacaMundur(DNode<T> newNode, DNode<T> target) {
-        tambahNode_Setelah(newNode, target);
+
+    public void tambahNode_Setelah(DNode<T> newNode, T targetValue) {
+        DNode<T> current = front;
+
+        while (current != null && !current.nodeValue.equals(targetValue)) {
+            current = current.next;
+        }
+
+        if (current != null) {
+            newNode.prev = current;
+            newNode.next = current.next;
+            if (current.next != null) {
+                current.next.prev = newNode;
+            } else {
+                back = newNode;
+            }
+            current.next = newNode;
+        }
+    }
+
+    public void tambahNode_SetelahBacaMundur(DNode<T> newNode, T targetValue) {
+        DNode<T> current = back;
+
+        while (current != null && !current.nodeValue.equals(targetValue)) {
+            current = current.prev;
+        }
+
+        if (current != null) {
+            newNode.prev = current;
+            newNode.next = current.next;
+            if (current.next != null) {
+                current.next.prev = newNode;
+            } else {
+                back = newNode;
+            }
+            current.next = newNode;
+        }
     }
 }

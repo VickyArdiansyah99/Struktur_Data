@@ -7,13 +7,13 @@ public class DNode<T> {
     
     public DNode() {
         nodeValue = null;
-        next = this;
-        prev = this;
+        next = null;
+        prev = null;
     }
     
     public DNode(T item) {
         nodeValue = item;
-        next = this;
-        prev = this;
+        next = null;
+        prev = null;
     }
 }
